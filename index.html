@@ -2,22 +2,14 @@
 <html lang="">
     <head>
         <meta charset="UTF-8">
-        <title>TBR</title>
+        <title>Hapet - a habit tracking pet</title>
         <script src="phaser.js"></script>
         <script src="main.js"></script>
         <script src="firstScene.js"></script>
         <script src="sceneTitle.js"></script>
-
-        <script src="classes/enemy.js"></script>
-        <script src="classes/player.js"></script> 
-
     </head>
 
     <style>
-        canvas{
-            margin:auto;
-        }
-
         html, body{
             height: 100vh;
             width:100vw;
@@ -25,7 +17,7 @@
             flex-direction: column;
             margin:0px;
             padding:0px;
-            background: rgb(21,24,38);
+            background: linear-gradient(180deg, #FFD39E 0%, #FFE6A6 60%);
         }
 
         button{
@@ -41,12 +33,11 @@
 
         .button-container{
             display: flex;
-            /* flex-direction: column; */
             margin: auto;
         }
 
         #phaser{
-            margin: auto;
+            margin: auto auto 0 auto;
         }
 
         .debug{
@@ -63,11 +54,11 @@
     </style>
 
     <body>
-        <div id="phaser"></div>
         <div class="button-container">
         </div>
         <p class="debug">
             Debug
         </p>
+        <div id="phaser"></div>
     </body>
 </html>

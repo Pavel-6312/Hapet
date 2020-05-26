@@ -5,76 +5,95 @@ class firstScene extends Phaser.Scene {
     }
 
     preload() { 
-        this.load.image('bg', 'assets/bg.png')
-        new PlayerPreload({scene:this}); 
-        new EnemyPreload({scene:this}); 
+        // this.load.image('bg', 'assets/bg.png');
+        this.load.spritesheet('pet-idle', 'assets/desert-enemy/2 Hyena/Hyena_idle.png',{frameWidth: 48, frameHeight: 48,});
+        this.load.spritesheet('pet-walk', 'assets/desert-enemy/2 Hyena/Hyena_walk.png',{frameWidth: 48, frameHeight: 48,});
+        this.load.spritesheet('pet-attack', 'assets/desert-enemy/2 Hyena/Hyena_attack.png',{frameWidth: 48, frameHeight: 48,});
+        this.load.spritesheet('pet-death', 'assets/desert-enemy/2 Hyena/Hyena_death.png',{frameWidth: 48, frameHeight: 48,});
     }
 
     create() {   
-   
+        //walk
+        this.anims.create({
+            key: 'pet-walk',
+            frames: this.anims.generateFrameNumbers('pet-walk', { start: 0, end: 6 }),
+            frameRate: 6,
+            repeat: -1 // -1 run forever / 1 -> run once
+        });
 
-    //create environment
-        var bg = this.add.image(0, -56, 'bg')
-        bg.setOrigin(0,0);
+        //idle
+        this.anims.create({
+            key: 'pet-idle',
+            frames: this.anims.generateFrameNumbers('pet-idle', { start: 0, end: 4 }),
+            frameRate: 6,
+            repeat: -1 // -1 run forever / 1 -> run once
+        });  
 
-        base = this.add.graphics()
+        //death
+        this.anims.create({
+            key: 'pet-death',
+            frames: this.anims.generateFrameNumbers('pet-death', { start: 0, end: 6 }),
+            frameRate: 10,
+            repeat:1,
+        }); 
+
+        //create environment
+        // var bg = this.add.image(0, -56, 'bg')
+        // bg.setOrigin(0,0);
+
+        var base = this.add.graphics()
         this.physics.add.existing(base)
         base.body.setAllowGravity(false)
         base.body.immovable = true
         base.body.width = 1000
         base.body.height = 24
         base.x = 0
-        base.y = baseX
+        base.y = 400   
 
-    //create unites
-        this.player = new PlayerCreate({scene:this}, cell/2 + cell * 4)
-        stateMachine = new StateMachine('idle', {
-            idle: new IdleState(),
-            move: new MoveState(),
-            attack: new AttackState(),
-            death: new DeathState(),
-            endturn: new EndTurnState(),
-            block: new BlockState(),
-            bow: new BowState(),
-        },[this, this.player]);  
-
-        this.enemy = new EnemyCreate({scene:this}, cell/2 + cell * 9); 
-        enemyStateMachine = new EnemyStateMachine('enemyDeath', {
-            enemyIdle: new EnemyIdleState(),
-            enemyMove: new EnemyMoveState(),
-            enemyAttack: new EnemyAttackState(),
-            enemyDeath: new EnemyDeathState(),
-        },[this, this.enemy]); 
-
-    //create generic enemies
-        for(var i=0; i < enemyArray.length; i++){
-            //create sprite
-            window[enemyArray[i].id] = this.physics.add.sprite(cell/2 + cell * enemyArray[i].spawn, 0, enemyArray[i].animKey + '-idle');
-            //load all anims
-            new BasicEnemyAnimsCreate({scene:this}, enemyArray[i].animKey);
-            //run idle
-            window[enemyArray[i].id].anims.play(enemyArray[i].animKey + '-idle', false);
-            //collider
-            this.physics.add.collider(window[enemyArray[i].id], base);
-        }   
-
-    //colliders
-        this.physics.add.collider(player, base);
-        this.physics.add.collider(enemy, base);
-
-    //camera
-        this.cameras.main.startFollow(player);
-        this.cameras.main.followOffset.set(0, 120);
+        //create pet
+        var pet = this.physics.add.sprite(0, 0, 'pet-idle');
+        pet.anims.play('pet-idle', false);
+        this.physics.add.collider(pet, base);
+ 
+        //camera
+        this.cameras.main.startFollow(pet);
+        this.cameras.main.followOffset.set(0, 0);
     }
 
     update() {
-        new PlayerUpdate({scene:this});
         
-    //text 
+        // //death
+        // if (petHp <= 0){
+        //     pet.anims.play(animKey + '-death', true);
+        // }
+   
+        // //move left
+        // if (distance > 1){
+        //     pet.anims.play(animKey + '-walk', true).setFlipX(false); 
+        //     scene.tweens.add({
+        //         targets: pet,
+        //         x: pet.x - cell,
+        //         ease: 'Power1',
+        //         duration: 500,
+        //     });
+        // }
+
+        // //move right
+        // else if (distance < -1){
+        //     pet.anims.play(animKey + '-walk', true).setFlipX(true);
+        //     scene.tweens.add({
+        //         targets: pet,
+        //         x: pet.x + cell,
+        //         ease: 'Power1',
+        //         duration: 500,
+        //     });      
+        // }
+
+        // this.pet.anims.play('pet-idle', false);
+        
+        //text 
         document.querySelector('.debug').innerHTML = 
-            'ap: ' + playerAp +'<br>'+ 
-            'turnAction: ' + turnAction +'<br>'+ 
-            'enemyTurn: ' + enemyTurn +'<br>'+
+            // 'turnAction: ' + turnAction +'<br>'+ 
             '';
     }
 }
