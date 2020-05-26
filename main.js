@@ -6,12 +6,12 @@ var petHp =10;
 window.onload=function(){
     var config = {
             type: Phaser.AUTO,
-            width: 1200,
+            width: 600,
             height: 300,
             parent: 'phaser',
             backgroundColor: 0xFFE6A6,
-            pixelArt: true, //fix blurred pixels
-            zoom: 1,
+            // pixelArt: true, //fix blurred pixels
+            zoom: 0.5,
             physics: {
                 default: "arcade",
                 arcade: {

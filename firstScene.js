@@ -10,6 +10,7 @@ class firstScene extends Phaser.Scene {
         this.load.spritesheet('pet-walk', 'assets/desert-enemy/2 Hyena/Hyena_walk.png',{frameWidth: 48, frameHeight: 48,});
         this.load.spritesheet('pet-attack', 'assets/desert-enemy/2 Hyena/Hyena_attack.png',{frameWidth: 48, frameHeight: 48,});
         this.load.spritesheet('pet-death', 'assets/desert-enemy/2 Hyena/Hyena_death.png',{frameWidth: 48, frameHeight: 48,});
+        this.load.image('cat', 'assets/cat.png');
     }
 
     create() {   
@@ -37,10 +38,6 @@ class firstScene extends Phaser.Scene {
             repeat:1,
         }); 
 
-        //create environment
-        // var bg = this.add.image(0, -56, 'bg')
-        // bg.setOrigin(0,0);
-
         var base = this.add.graphics()
         this.physics.add.existing(base)
         base.body.setAllowGravity(false)
@@ -51,8 +48,8 @@ class firstScene extends Phaser.Scene {
         base.y = 400   
 
         //create pet
-        var pet = this.physics.add.sprite(0, 0, 'pet-idle');
-        pet.anims.play('pet-idle', false);
+        var pet = this.physics.add.sprite(0, 0, 'cat');
+        // pet.anims.play('pet-idle', false);
         this.physics.add.collider(pet, base);
  
         //camera
